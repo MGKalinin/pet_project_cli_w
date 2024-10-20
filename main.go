@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 )
 
 type Weather struct {
@@ -22,7 +23,11 @@ type Weather struct {
 
 func main() {
 	fmt.Println("Ready to work")
-	res, err := http.Get("http://api.weatherapi.com/v1/current.json?key=c1a2724b286a497e846191744241910&q=Moscow&aqi=no")
+	q := "Moscow"
+	if len(os.Args) >= 2 {
+		q = os.Args[1]
+	}
+	res, err := http.Get("http://api.weatherapi.com/v1/current.json?key=c1a2724b286a497e846191744241910&q=" + q + "&aqi=no")
 	if err != nil {
 		panic(err)
 	}
